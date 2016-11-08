@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from importlib import import_module
 
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -26,7 +29,6 @@ SECRET_KEY = '4jjqi-of_qp07ivx@9__ds0ydu-)gp$4&slx2_@=1n!lnxf0xy'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -70,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'SteelKiwi.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -80,7 +81,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -100,7 +100,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -114,8 +113,31 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ENVIRONMENT = "stepan"
+
+
+def override_settings(module_oath):
+    try:
+        _m = import_module(module_oath)
+    except ImportError as e:
+        print(e)
+        print("Warning. Unable to load custom settings")
+    else:
+        _this_module = sys.modules[__name__]
+        for _k in dir(_m):
+            if _k.isupper() and not _k.startswith('__'):
+                setattr(_this_module, _k, getattr(_m, _k))
+
+
+try:
+    from SteelKiwi.current_environment import *
+
+    override_settings("SteelKiwi.environments.{}".format(ENVIRONMENT))
+except Exception as e:
+    print(e)
+    print("unable to load environment, using default settings instead")
