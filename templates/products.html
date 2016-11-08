@@ -1,0 +1,32 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+
+    {% for product in products %}
+        <br>
+        <a href="/products/{{ product.slug }}/">Product: {{ product.name }}</a>
+        <br>
+        <ul>
+            <li>{{ product.name }}</li>
+            <li>{{ product.description }}</li>
+            <li>{{ product.price }}</li>
+        </ul>
+    {% endfor %}
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page={{ products.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+        </span>
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+    <a href="/products/">HOME</a>
+
+    <br>
+    <p>Product: {{ product.name }}</p>
+    <br>
+    <ul>
+        <li>{{ product.name }}</li>
+        <li>{{ product.description }}</li>
+        <li>{{ product.price }}</li>
+    </ul>
+
+
+    <br>
+    <p>Comments:</p>
+    <br>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.text }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
