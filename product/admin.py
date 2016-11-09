@@ -16,5 +16,5 @@ class ProductAdmin(admin.ModelAdmin):
     filter_horizontal = ('user_like',)
     inlines = [CommentInline, ]
 
-
+admin.site.site_url = '/products/'
 admin.site.register(Product, ProductAdmin)

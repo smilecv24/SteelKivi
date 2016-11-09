@@ -6,10 +6,10 @@ from django.db import models
 
 class Product(models.Model):
     name = models.CharField(max_length=255, default="")
-    slug = models.SlugField(max_length=255, default="")
+    slug = models.SlugField(max_length=255, default="", unique=True)
     description = models.TextField(verbose_name="About", default="")
     price = models.FloatField(verbose_name="Price", default=0)
-    user_like = models.ManyToManyField(User, null=True, blank=True, default="")
+    user_like = models.ManyToManyField(User, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
