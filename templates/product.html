@@ -5,15 +5,25 @@
     <a href="/products/">HOME</a>
 
     <br>
-    <p>Product: {{ product.name }}</p>
+    <h1>Product: {{ product.name }}</h1>
     <br>
     <ul>
         <li>{{ product.name }}</li>
         <li>{{ product.description }}</li>
         <li>{{ product.price }}</li>
     </ul>
-
-
+    <h3>Likes: {{ product.user_like.count }}</h3>
+    <a href="/add-like/{{ product.slug }}/">Add Like</a>
+    {% if error %}
+        {{ error }}
+    {% endif %}
+    <br>
+    <h3>Add comment</h3>
+    <form method="post" action="{% url 'add_comment' product.slug %}">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Add">
+    </form>
     <br>
     <p>Comments:</p>
     <br>

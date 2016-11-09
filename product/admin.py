@@ -13,6 +13,7 @@ class CommentInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+    filter_horizontal = ('user_like',)
     inlines = [CommentInline, ]
 
 

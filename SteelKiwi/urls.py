@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from product.views import products, product
+from product.views import products, product, add_comment, add_like
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', products, name='products'),
     url(r'^products/$', products, name='products'),
     url(r'^products/(?P<product_detail>.*)/$', product, name='product'),
+    url(r'^add-comment/(?P<product_slug>.*)/$', add_comment, name='add_comment'),
+    url(r'^add-like/(?P<product_slug>.*)/$', add_like, name='add_like'),
 ]
